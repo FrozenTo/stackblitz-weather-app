@@ -44,11 +44,11 @@ const App = () => {
           <p className="location">Location: {weatherData?.name}</p>
           <div className="details">
             <div className="details-item">
-              <img src="/path/to/wind-icon.png" alt="Wind Icon" />
+              <img src="wind.png" alt="Wind Icon" />
               <span>{weatherData?.wind?.speed} m/s</span>
             </div>
             <div className="details-item">
-              <img src="/path/to/humidity-icon.png" alt="Humidity Icon" />
+              <img src="wind.png" alt="Wind Icon" />
               <span>{weatherData?.main?.humidity}%</span>
             </div>
           </div>
