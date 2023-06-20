@@ -8,6 +8,8 @@ const App = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
     // Fetch weather data when the component mounts
@@ -15,6 +17,14 @@ const App = () => {
       fetchWeatherData();
     }
   }, [city]);
+
+  useEffect(() => {
+    // Update the body styles when the language or theme changes
+    document.body.dataset.lang = language;
+    document.body.dataset.theme = theme;
+    localStorage.setItem('language', language);
+    localStorage.setItem('theme', theme);
+  }, [language, theme]);
 
   const fetchWeatherData = async () => {
     try {
@@ -49,45 +59,134 @@ const App = () => {
     return Math.ceil(temperature);
   };
 
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+  };
+
+  const changeTheme = (theme) => {
+    setTheme(theme);
+  };
+
   return (
-    <div className="container">
-      <h1>Weather App</h1>
-      <div className="search">
-        <input
-          type="text"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          placeholder="Enter city name"
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : weatherData ? (
-        <div className="weather-card">
-          <h2>{weatherData.name}</h2>
-          <h3>{weatherData.weather[0].description}</h3>
-          <img
-            className="weather-icon"
-            src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-            alt="Weather Icon"
+    <div className="app">
+      <div className="container">
+        <h1>
+          {language === 'en'
+            ? 'Weather App'
+            : language === 'ru'
+            ? 'Приложение Погоды'
+            : 'Ilma Rakendus'}
+        </h1>
+        <div className="search">
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder={
+              language === 'en'
+                ? 'Enter city name'
+                : language === 'ru'
+                ? 'Введите название города'
+                : 'Sisesta linna nimi'
+            }
           />
-          <p className="temperature">{roundUpTemperature(weatherData.main.temp)}&deg;C</p>
-          <p className="location">Location: {weatherData.name}</p>
-          <div className="details">
-            <div className="details-item">
-              <img src="https://stackblitz.com/files/stackblitz-starters-wagww9/github/FrozenTo/stackblitz-weather-app/main/public/wind2.png" alt="Wind Icon" />
-              <span>{weatherData.wind.speed} m/s</span>
-            </div>
-            <div className="details-item">
-              <img src="/wind2.png" alt="Wind Icon" />
-              <span>{weatherData.main.humidity}%</span>
+          <button className="search-button" onClick={handleSearch}>
+            {language === 'en'
+              ? 'Search'
+              : language === 'ru'
+              ? 'Поиск'
+              : 'Otsi'}
+          </button>
+        </div>
+        {loading ? (
+          <p>
+            {language === 'en'
+              ? 'Loading...'
+              : language === 'ru'
+              ? 'Загрузка...'
+              : 'Laadimine...'}
+          </p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : weatherData ? (
+          <div className="weather-card">
+            <h2>{weatherData.name}</h2>
+            <h3>{weatherData.weather[0].description}</h3>
+            <img
+              className="weather-icon"
+              src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+              alt="Weather Icon"
+            />
+            <p className="temperature">
+              {roundUpTemperature(weatherData.main.temp)}&deg;C
+            </p>
+            <p className="location">
+              {language === 'en'
+                ? 'Location'
+                : language === 'ru'
+                ? 'Местоположение'
+                : 'Asukoht'}
+              : {weatherData.name}
+            </p>
+            <div className="details">
+              <div className="details-item">
+                <img
+                  src="https://stackblitz.com/files/stackblitz-starters-wagww9/github/FrozenTo/stackblitz-weather-app/main/public/wind2.png"
+                  alt={
+                    language === 'en'
+                      ? 'Wind Icon'
+                      : language === 'ru'
+                      ? 'Иконка Ветра'
+                      : 'Tuule Ikoon'
+                  }
+                />
+                <span>{weatherData.wind.speed} m/s</span>
+              </div>
+              <div className="details-item">
+                <img
+                  src="https://github.com/FrozenTo/stackblitz-weather-app/blob/main/public/cloud.png?raw=true"
+                  alt={
+                    language === 'en'
+                      ? 'Rain Icon'
+                      : language === 'ru'
+                      ? 'Иконка Дождя'
+                      : 'Vihma Ikoon'
+                  }
+                />
+                <span>{weatherData.main.humidity}%</span>
+              </div>
             </div>
           </div>
+        ) : null}
+        <div className="language-select">
+          <button
+            className="language-button"
+            onClick={() => changeLanguage('en')}
+          >
+            ENG
+          </button>
+          <button
+            className="language-button"
+            onClick={() => changeLanguage('ru')}
+          >
+            RU
+          </button>
+          <button
+            className="language-button"
+            onClick={() => changeLanguage('et')}
+          >
+            EST
+          </button>
         </div>
-      ) : null}
+        <div className="theme-select">
+          <button className="theme-button" onClick={() => changeTheme('light')}>
+            Light
+          </button>
+          <button className="theme-button" onClick={() => changeTheme('dark')}>
+            Dark
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
