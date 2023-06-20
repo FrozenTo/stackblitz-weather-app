@@ -1,0 +1,79 @@
+/* Reset default styles */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.weather-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.weather-card h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.weather-card h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.weather-card p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.weather-card .weather-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 15px;
+}
+
+.weather-card .temperature {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.weather-card .location {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.weather-card .details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-card .details-item {
+  display: flex;
+  align-items: center;
+}
+
+.weather-card .details-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
