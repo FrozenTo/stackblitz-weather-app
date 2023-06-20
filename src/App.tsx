@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './index.tsx';
+import './style.css';
 
-const API_KEY = 'b2a33dfbb8da3bf109d5531f0acb008d'; 
+const API_KEY = 'b2a33dfbb8da3bf109d5531f0acb008d';
 
 const App = () => {
   const [weatherData, setWeatherData] = useState(null);
